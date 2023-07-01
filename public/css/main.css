@@ -1,0 +1,46 @@
+body {
+      background-color: #A2B2EE;
+      color: #2e3239;
+    }
+
+    .nav {
+      background-color:azure; /* Color de fondo del menú */
+      color: aqua; /* Color de texto del menú */
+      font-family: Arial, sans-serif; /* Fuente del texto del menú */
+      padding: 10px; /* Espacio alrededor del menú */
+      text-align: center; /* Centra el menú horizontalmente */
+    }
+    
+    .nav ul {
+      list-style: none; /* Elimina los puntos de la lista */
+      margin: 0;
+      padding: 0;
+    }
+    
+    .nav li {
+      display: inline-block; /* Hace que los elementos se muestren en línea */
+      margin: 0 10px; /* Espacio entre los elementos del menú */
+    }
+    
+    .nav li a {
+      color: rebeccapurple; /* Color de texto del enlace */
+      text-decoration: none; /* Elimina la subrayado del enlace */
+      padding: 10px; /* Espacio alrededor del texto del enlace */
+      border-radius: 5px; /* Redondea las esquinas del enlace */
+    }
+    
+    .nav li a:hover {
+      background-color:lightseagreen; /* Color de fondo cuando se pasa el ratón por encima del enlace */
+    } 
+
+#apartado {
+    background-color: #5F7ADB;
+    padding: 50px;
+    margin-bottom: 30px;
+}
+
+#P1,
+#P2,
+#P3 {
+    color: #2e3239;
+}
