@@ -7,8 +7,8 @@
       </div>
       <div className="mb-3">
         <label for="" className="form-label">Contraseña</label>
-        <input type="text" required
-        className="form-control" name="password" id="password" aria-describedby="helpId" placeholder="Ingrese la contraseña"">
+        <input type="password" required
+        className="form-control" name="password" id="password" aria-describedby="helpId" placeholder="Ingrese la contraseña">
         <small id="helpId" className="form-text text-muted">Contraseña</small>
       </div>
       <div className="mb-3">

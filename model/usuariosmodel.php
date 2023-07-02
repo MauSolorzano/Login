@@ -42,10 +42,10 @@ class UsuariosModel extends Model
     {
         try {
             //code...
-            $datos['id'] = "0";
-            $password = $datos['password'];
-            $SSLPassword = openssl_encrypt($password, 'AES-256-CBC', 'clave_secreta', 0, 'vector_inicializacion');
-            $datos['password'] = $SSLPassword;
+            $datos['id'] = "0"; 
+            $HASHPassword = password_hash($datos['password'], PASSWORD_DEFAULT);
+            var_dump($HASHPassword);
+            $datos['password'] = $HASHPassword;
             $stringSQL = 'INSERT INTO user(id, name, email, password) VALUES ( :id, :name, :email, :password);';
             $query = $this->db->connect()->prepare($stringSQL);
             $query->execute($datos);
@@ -90,7 +90,7 @@ class UsuariosModel extends Model
             return true;
         } catch (PDOException $th) {
             //throw $th;
-            var_dump($th);
+            //var_dump($th);
             return false;
         }
     }
@@ -118,15 +118,16 @@ class UsuariosModel extends Model
             $stringSQL = "SELECT * FROM `user` WHERE email = :email;";
             $query = $this->db->connect()->prepare($stringSQL);
             $query->execute(['email' => $email]);
-    
+
             $rowCount = $query->rowCount();
-    
+
             if ($rowCount > 0) {
                 $row = $query->fetch();
-                $encryptedPassword = $row['password'];
-                $decryptedPassword = openssl_decrypt($encryptedPassword, 'AES-256-CBC', 'clave_secreta', 0, 'vector_inicializacion');
-    
-                if ($password === $decryptedPassword) {
+                if ($password === $row['password']) {
+                    $_SESSION['usuario'] = $email;
+                    return true;
+                }
+                if (password_verify($password, $row["password"])) {            
                     $_SESSION['usuario'] = $email;
                     return true;
                 } else {
@@ -140,43 +141,3 @@ class UsuariosModel extends Model
         }
     }
 }
-
-?>
-
-/** function validarCredenciales($email, $password){
-
-try {
-//code...
-$OpenPassword = openssl_decrypt($password, 'AES-256-CBC', 'clave_secreta', 0, 'vector_inicializacion');
-var_dump($OpenPassword);
-if ($password == $OpenPassword) {
-$password = $OpenPassword;
-var_dump($OpenPassword);
-$stringSQL = "Select * FROM `user` where email=:email and password = :password;";
-$query = $this->db->connect()->prepare($stringSQL);
-$query->execute(['email'=>$email, 'password'=>$password]);
-}else {
-$stringSQL = "Select * FROM `user` where email=:email and password = :password;";
-$query = $this->db->connect()->prepare($stringSQL);
-$query->execute(['email'=>$email, 'password'=>$password]);
-}
-$rowCount = $query->rowCount();
-
-
-if ($rowCount > 0) {
-
-$_SESSION['usuario'] = $email;
-
-// La consulta fue exitosa
-return true;
-
-} else {
-// No se encontraron registros que coincidan
-return false;
-}
-
-} catch (PDOException $th) {
-//throw $th;
-return $th;
-}
-} */
